@@ -125,6 +125,14 @@ const Login = () => {
                 >
                   Sign In
                 </Button>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Continue with Google
+                </Button>
                 <Grid container>
                   <Grid item xs></Grid>
                   <Grid item></Grid>
