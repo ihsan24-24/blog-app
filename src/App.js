@@ -1,15 +1,11 @@
 import React from "react";
 
-import { BrowserRouter } from "react-router-dom";
-import NavbarComp from "./components/Navbar";
+import Login from "./pages/Login";
 
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <NavbarComp />
-        <h1>Legendcx</h1>
-      </BrowserRouter>
+      <Login />
     </div>
   );
 }
