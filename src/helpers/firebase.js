@@ -7,6 +7,7 @@ import {
   doc,
   addDoc,
   updateDoc,
+  getDoc,
 } from "firebase/firestore";
 import { useEffect } from "react";
 import {
@@ -25,6 +26,7 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
+import { async } from "@firebase/util";
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
   authDomain: process.env.REACT_APP_AUTH_DOMAIN,
@@ -45,15 +47,24 @@ const provider = new GoogleAuthProvider();
 
 //! database connetct functions
 
-export const useContactListener = (setContactList) => {
+export const useContactListener = (setBlogList) => {
   useEffect(() => {
     onSnapshot(contactRef, (snapshot) => {
-      setContactList(
-        snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
-      );
+      setBlogList(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
       //console.log(snapshot.docs.map((doc) => doc.data()));
     });
   }, []);
+};
+export const getDataById = async (id) => {
+  const docRef = doc(db, "users", id);
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    return docSnap.data();
+  } else {
+    // doc.data() will be undefined in this case
+    console.log("No such document!");
+  }
 };
 
 export const editContact = ({ id, name, phone, gender }, setEdit) => {
@@ -87,30 +98,34 @@ export const addContactItem = (addContact) => {
 };
 
 //! auth functions
-export const createUserWithMail = ({ username, email, password }, navigate) => {
-  createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      // eslint-disable-next-line
-      const user = userCredential.user;
-      navigate("/login");
-    })
-    .catch((error) => {
-      // eslint-disable-next-line
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      // setErr(errorMessage.split("/")[1].split("-").join(" ").replace(").", ""));
-    });
-  updateProfile(auth.currentUser, {
+export const createUserWithMail = async (
+  { username, email, password },
+  navigate
+) => {
+  await createUserWithEmailAndPassword(auth, email, password);
+  // .then((userCredential) => {
+  //   // eslint-disable-next-line
+  //   const user = userCredential.user;
+
+  // })
+  // .catch((error) => {
+  //   // eslint-disable-next-line
+  //   const errorCode = error.code;
+  //   const errorMessage = error.message;
+  //   // setErr(errorMessage.split("/")[1].split("-").join(" ").replace(").", ""));
+  // });
+  await updateProfile(auth.currentUser, {
     displayName: username,
-  })
-    .then(() => {
-      // Profile updated!
-      // ...
-    })
-    .catch((error) => {
-      // An error occurred
-      // ...
-    });
+  });
+  // .then((res) => {
+  //   console.log(res);
+  //   console.log(username);
+  // })
+  // .catch((error) => {
+  //   // An error occurred
+  //   // ...
+  // });
+  navigate("/");
 };
 
 export const LoginWithMail = ({ email, password }, navigate) => {
@@ -119,6 +134,7 @@ export const LoginWithMail = ({ email, password }, navigate) => {
       toastSuccessNotify("Login is succesfull...");
       // dispatch(setUser({ email }));
       navigate("/dashboard");
+      console.log(userCredential);
     })
     .catch((error) => {
       const errorMessage = error.message;
