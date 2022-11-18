@@ -118,7 +118,6 @@ export const LoginWithMail = ({ email, password }, navigate) => {
     .then((userCredential) => {
       toastSuccessNotify("Login is succesfull...");
       // dispatch(setUser({ email }));
-      console.log(auth);
       navigate("/dashboard");
     })
     .catch((error) => {
