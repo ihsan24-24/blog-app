@@ -6,11 +6,11 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useLocation, useParams } from "react-router-dom";
-import { getDataById } from "../helpers/firebase";
+import { editBlog, getDataById, IsLogin } from "../helpers/firebase";
 
 const CartDetail = () => {
-  const [nowUser, setNowUSer] = React.useState();
-  const [data, setData] = React.useState();
+  const [nowUser, setNowUSer] = React.useState(null);
+  const [data, setData] = React.useState("");
 
   //   const {
   //     state: { date, email, id, name, picture, title },
@@ -20,31 +20,39 @@ const CartDetail = () => {
     const newData = await getDataById(id);
     setData(newData);
   };
+
   React.useEffect(() => {
     getData();
+    IsLogin(setNowUSer);
   }, []);
-  console.log(data);
-
+  const editThisBlog = () => {
+    // editBlog()
+  };
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia
         component="img"
         height="140"
-        image="/static/images/cards/contemplative-reptile.jpg"
+        image={data?.picture}
         alt="green iguana"
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          Lizard
+          {nowUser?.name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Lizards are a widespread group of squamate reptiles, with over 6,000
-          species, ranging across all continents except Antarctica
+          {data?.title}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {data?.date}
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Share</Button>
-        <Button size="small">Learn More</Button>
+        {data?.email === nowUser?.email && (
+          <Button size="small" onClick={editThisBlog}>
+            Edit
+          </Button>
+        )}
       </CardActions>
     </Card>
   );
