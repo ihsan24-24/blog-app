@@ -12,6 +12,7 @@ import Container from "@mui/material/Container";
 import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { Form, Formik } from "formik";
+import { LoginWithGoogle, LoginWithMail } from "../helpers/firebase";
 
 const loginSchema = yup.object().shape({
   email: yup
@@ -49,6 +50,13 @@ function Copyright(props) {
 
 const Login = () => {
   const navigate = useNavigate();
+  const loginGoogle = () => {
+    LoginWithGoogle(navigate);
+  };
+  const loginApp = (e, values) => {
+    e.preventDefault();
+    LoginWithMail(values, navigate);
+  };
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -69,7 +77,7 @@ const Login = () => {
           touched,
           errors,
         }) => (
-          <Form>
+          <Form onSubmit={(e) => loginApp(e, values)}>
             <Box
               sx={{
                 marginTop: 8,
@@ -122,14 +130,16 @@ const Login = () => {
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
+                  onClick={(e) => loginApp(e, values)}
                 >
                   Sign In
                 </Button>
                 <Button
-                  type="submit"
+                  type="button"
                   fullWidth
                   variant="contained"
                   sx={{ mt: 3, mb: 2 }}
+                  onClick={loginGoogle}
                 >
                   Continue with Google
                 </Button>
