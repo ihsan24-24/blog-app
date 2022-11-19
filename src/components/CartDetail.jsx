@@ -6,7 +6,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useNavigate, useParams } from "react-router-dom";
-import { getDataById, IsLogin } from "../helpers/firebase";
+import { deleteBlog, getDataById, IsLogin } from "../helpers/firebase";
 
 const CartDetail = () => {
   const [nowUser, setNowUSer] = React.useState(null);
@@ -30,33 +30,63 @@ const CartDetail = () => {
       state: { title: data.title, picture: data.picture, edit: true, id },
     });
   };
+  const deleteThisBlog = () => {
+    deleteBlog(id, navigate);
+  };
+  const goBack = () => {
+    navigate(-1);
+  };
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      <CardMedia
-        component="img"
-        height="140"
-        image={data?.picture}
-        alt="green iguana"
-      />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          {data?.name}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {data?.title}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {data?.date}
-        </Typography>
-      </CardContent>
-      <CardActions>
-        {data?.email === nowUser?.email && (
-          <Button size="small" onClick={editThisBlog}>
-            Edit
+    <div className="detail-cart">
+      <Card sx={{ width: "350px", minHeight: "500px" }}>
+        <CardMedia
+          component="img"
+          height="350"
+          image={data?.picture}
+          alt="green iguana"
+        />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            {data?.name}
+          </Typography>
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ fontSize: "18px" }}
+          >
+            {data?.title}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            {data?.date}
+          </Typography>
+        </CardContent>
+        <CardActions>
+          <Button size="small" onClick={goBack}>
+            Go Back
           </Button>
-        )}
-      </CardActions>
-    </Card>
+          {data?.email === nowUser?.email && (
+            <Button
+              variant="outlined"
+              color="primary"
+              size="small"
+              onClick={editThisBlog}
+            >
+              Edit
+            </Button>
+          )}
+          {data?.email === nowUser?.email && (
+            <Button
+              variant="outlined"
+              color="danger"
+              size="small"
+              onClick={deleteThisBlog}
+            >
+              Delete
+            </Button>
+          )}
+        </CardActions>
+      </Card>
+    </div>
   );
 };
 

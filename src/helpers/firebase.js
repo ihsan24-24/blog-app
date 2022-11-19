@@ -81,10 +81,11 @@ export const editBlog = ({ title, picture }, { name, email }, id) => {
   }
 };
 
-export const deleteBlog = (id) => {
+export const deleteBlog = (id, navigate) => {
   try {
     deleteDoc(doc(db, "users", id));
     toastErrorNotify("Deleted Successfully");
+    navigate(-1);
   } catch (error) {
     toastWarnNotify(error.message);
   }

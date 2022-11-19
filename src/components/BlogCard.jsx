@@ -1,59 +1,67 @@
 import * as React from "react";
-import { styled } from "@mui/material/styles";
+
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import Collapse from "@mui/material/Collapse";
+
 import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
+
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
+
 import { useNavigate } from "react-router-dom";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 
 const BlogCard = ({ date, email, id, name, picture, title }) => {
   const navigate = useNavigate();
   const goDetail = () => {
-    navigate(`/dashboard/${id}`, {
-      state: { date, email, id, name, picture, title },
-    });
+    navigate(`/dashboard/${id}`);
   };
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card
+      sx={{
+        width: "280px",
+        height: "350px",
+        backgroundColor: "rgba(16, 199, 199, 0.23)",
+        padding: "1rem",
+      }}
+    >
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            R
+            {name[0].toLocaleUpperCase()}
           </Avatar>
         }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
+        // action={
+        //   <IconButton aria-label="settings">
+        //     <MoreVertIcon />
+        //   </IconButton>
+        // }
+        title={name}
+        subheader={date}
       />
       <CardMedia
         component="img"
         height="194"
-        image="/static/images/cards/paella.jpg"
+        image={picture}
         alt="Paella dish"
       />
       <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          This impressive paella is a perfect party dish and a fun meal to cook
-          together with your guests. Add 1 cup of frozen peas along with the
-          mussels, if you like.
+        <Typography variant="body2" color="text.secondary" className="truncate">
+          {title}
         </Typography>
       </CardContent>
-      <Button onClick={goDetail}>Detail</Button>
+      <Box sx={{ textAlign: "center" }}>
+        <Button
+          variant="outlined"
+          size="medium"
+          onClick={goDetail}
+          color="secondary"
+        >
+          Detail
+        </Button>
+      </Box>
     </Card>
   );
 };

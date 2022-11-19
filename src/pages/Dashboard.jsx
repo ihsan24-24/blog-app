@@ -7,7 +7,7 @@ const Dashboard = () => {
 
   useBlogListListener(setBlogList);
   return (
-    <div sx={{ display: "flex", flexWrap: "wrap" }}>
+    <div className="dashboard">
       {blogList?.map((item) => {
         return <BlogCard key={item.id} {...item} />;
       })}
