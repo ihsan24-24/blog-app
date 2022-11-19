@@ -3,11 +3,12 @@ import Box from "@mui/material/Box";
 import React, { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import { addBloggItem, editBlog, IsLogin } from "../helpers/firebase";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const NewBlock = () => {
   const { state: editData } = useLocation();
+  const navigate = useNavigate();
   const { name, email } = useSelector((state) => state.auth);
   const [newPost, setNewPost] = useState({
     title: editData?.title || "",
@@ -20,9 +21,9 @@ const NewBlock = () => {
       //     title: newPost.title || editData.title,
       //     picture: newPost.picture || editData.picture,
       //   };
-      editBlog(newPost, editData.id);
+      editBlog(newPost, editData.id, navigate);
     } else {
-      addBloggItem(newPost, name, email);
+      addBloggItem(newPost, name, email, navigate);
     }
   };
   const handleChange = (e) => {
@@ -87,13 +88,7 @@ const NewBlock = () => {
           />
         </Box>
         <Box>
-          <Button
-            variant="contained"
-            sx={{ marginLeft: "1rem", marginTop: "1rem" }}
-            onClick={handleClick}
-          >
-            Contained
-          </Button>
+          <button onClick={handleClick}>Save</button>
         </Box>
       </div>
     </Box>

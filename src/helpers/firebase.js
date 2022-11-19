@@ -27,6 +27,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { clearUser, setUser } from "../features/AuthSlice";
+import { setBlogList } from "../features/BlogSlice";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -48,11 +49,15 @@ const provider = new GoogleAuthProvider();
 
 //! database connetct functions
 
-export const useBlogListListener = (setBlogList) => {
+export const useBlogListListener = (dispatch) => {
   useEffect(() => {
     onSnapshot(contactRef, (snapshot) => {
-      setBlogList(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
-      //console.log(snapshot.docs.map((doc) => doc.data()));
+      // setBlogList(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
+
+      dispatch(
+        setBlogList(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })))
+      );
+      // return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
     });
   }, []);
 };
@@ -68,15 +73,24 @@ export const getDataById = async (id) => {
   }
 };
 
-export const editBlog = ({ title, picture }, id) => {
+export const editBlog = ({ title, picture }, favorite, id, navigate) => {
   try {
     const docRef = doc(db, "users", id);
-    updateDoc(docRef, {
-      title,
-      picture,
-      date: (" " + new Date()).slice(0, 25),
-    });
-    toastSuccessNotify("Updated Successfully!");
+    console.log(favorite);
+    console.log("çalıştı");
+    if (favorite) {
+      updateDoc(docRef, {
+        favorite,
+      });
+    } else {
+      updateDoc(docRef, {
+        title,
+        picture,
+        date: (" " + new Date()).slice(0, 25),
+      });
+      toastSuccessNotify("Updated Successfully!");
+      navigate("/dashboard");
+    }
   } catch (error) {
     toastWarnNotify(error.message);
   }
@@ -92,7 +106,7 @@ export const deleteBlog = (id, navigate) => {
   }
 };
 
-export const addBloggItem = ({ title, picture }, name, email) => {
+export const addBloggItem = ({ title, picture }, name, email, navigate) => {
   try {
     addDoc(contactRef, {
       title,
@@ -100,9 +114,10 @@ export const addBloggItem = ({ title, picture }, name, email) => {
       date: (" " + new Date()).slice(0, 25),
       name,
       email,
+      favorite: false,
     });
     toastSuccessNotify("Added Successfully!");
-    console.log("çalıştı");
+    navigate("/dashboard");
   } catch (error) {
     toastWarnNotify(error.message);
   }
@@ -140,13 +155,20 @@ export const LoginWithMail = ({ email, password }, navigate, dispatch) => {
     });
 };
 
-export const IsLogin = (setNowUSer) => {
+export const IsLogin = (setUSerInfo) => {
   const auth = getAuth();
   onAuthStateChanged(auth, (user) => {
     if (user) {
       // eslint-disable-next-line
       const uid = user.uid;
-      setNowUSer({ name: user.displayName, email: user.email });
+      setUSerInfo({
+        name: user.displayName,
+        email: user.email,
+        creatTime: user.metadata.creationTime.replace("GMT", ""),
+        singupTime: user.metadata.lastSignInTime.replace("GMT", ""),
+      });
+      console.log(user);
+      // setNowUSer({ name: user.displayName, email: user.email });
     } else {
     }
   });

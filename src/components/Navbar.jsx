@@ -19,7 +19,7 @@ const NavbarComp = () => {
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  console.log(name, email);
+
   const handleClose = () => {
     setAnchorEl(null);
   };

@@ -3,7 +3,7 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
+// import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useNavigate, useParams } from "react-router-dom";
 import { deleteBlog, getDataById, IsLogin } from "../helpers/firebase";
@@ -17,6 +17,7 @@ const CartDetail = () => {
   const { id } = useParams();
   const getData = async () => {
     const newData = await getDataById(id);
+    console.log(newData);
     setData(newData);
   };
 
@@ -34,6 +35,8 @@ const CartDetail = () => {
   const goBack = () => {
     navigate(-1);
   };
+  console.log("detail çalıştı");
+  console.log("id : ", id);
   return (
     <div className="detail-cart">
       <Card sx={{ width: "350px", minHeight: "500px" }}>
@@ -59,28 +62,14 @@ const CartDetail = () => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button size="small" onClick={goBack}>
+          <button size="small" onClick={goBack}>
             Go Back
-          </Button>
+          </button>
           {data?.email === email && (
-            <Button
-              variant="outlined"
-              color="primary"
-              size="small"
-              onClick={editThisBlog}
-            >
-              Edit
-            </Button>
+            <button onClick={editThisBlog}>Edit</button>
           )}
           {data?.email === email && (
-            <Button
-              variant="outlined"
-              color="danger"
-              size="small"
-              onClick={deleteThisBlog}
-            >
-              Delete
-            </Button>
+            <button onClick={deleteThisBlog}>Delete</button>
           )}
         </CardActions>
       </Card>

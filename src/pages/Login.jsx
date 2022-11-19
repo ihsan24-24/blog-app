@@ -12,7 +12,11 @@ import Container from "@mui/material/Container";
 import { Link, useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { Form, Formik } from "formik";
-import { LoginWithGoogle, LoginWithMail } from "../helpers/firebase";
+import {
+  LoginWithGoogle,
+  LoginWithMail,
+  useBlogListListener,
+} from "../helpers/firebase";
 import { useDispatch } from "react-redux";
 
 const loginSchema = yup.object().shape({
@@ -52,6 +56,7 @@ function Copyright(props) {
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  useBlogListListener(dispatch);
   const loginGoogle = () => {
     LoginWithGoogle(navigate, dispatch);
   };
