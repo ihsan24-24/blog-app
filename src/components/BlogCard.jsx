@@ -4,24 +4,35 @@ import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Avatar from "@mui/material/Avatar";
 
+import Avatar from "@mui/material/Avatar";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
 
 import { useNavigate } from "react-router-dom";
-import { Box, CardActions } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import kebap from "../assets/kebap.jpg";
+import { editFavorite } from "../helpers/firebase";
+import { useSelector } from "react-redux";
 
 const BlogCard = ({ date, email, id, name, picture, title, favorite }) => {
   const navigate = useNavigate();
-  let color = "";
+
+  const [color, setColor] = React.useState();
+  const userName = useSelector((state) => state.auth.name);
+  React.useEffect(() => {
+    favorite ? setColor("red") : setColor("");
+  }, []);
+
   const goDetail = () => {
     navigate(`/dashboard/${id}`);
   };
-  const addFavorite = () => {};
-
+  const addFavorite = () => {
+    favorite = !favorite;
+    favorite ? setColor("red") : setColor("");
+    editFavorite(favorite, id);
+  };
   return (
     <Card
       sx={{
@@ -37,11 +48,6 @@ const BlogCard = ({ date, email, id, name, picture, title, favorite }) => {
             {name[0].toLocaleUpperCase()}
           </Avatar>
         }
-        // action={
-        //   <IconButton aria-label="settings">
-        //     <MoreVertIcon />
-        //   </IconButton>
-        // }
         title={name}
         subheader={date}
       />
@@ -59,11 +65,11 @@ const BlogCard = ({ date, email, id, name, picture, title, favorite }) => {
 
       <Box sx={{ textAlign: "center", display: "flex" }}>
         <div>
-          <i
-            className="fa-regular fa-heart"
-            id="heart"
-            onClick={addFavorite}
-          ></i>
+          {userName && (
+            <IconButton aria-label="add to favorites" onClick={addFavorite}>
+              <FavoriteIcon sx={{ color: color }} />
+            </IconButton>
+          )}
         </div>
         <button onClick={goDetail}>Detail</button>
       </Box>

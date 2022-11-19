@@ -72,25 +72,25 @@ export const getDataById = async (id) => {
     console.log("No such document!");
   }
 };
+export const editFavorite = (favorite, id) => {
+  const docRef = doc(db, "users", id);
+  try {
+    updateDoc(docRef, {
+      favorite,
+    });
+  } catch (error) {}
+};
 
-export const editBlog = ({ title, picture }, favorite, id, navigate) => {
+export const editBlog = ({ title, picture }, id, navigate) => {
   try {
     const docRef = doc(db, "users", id);
-    console.log(favorite);
-    console.log("çalıştı");
-    if (favorite) {
-      updateDoc(docRef, {
-        favorite,
-      });
-    } else {
-      updateDoc(docRef, {
-        title,
-        picture,
-        date: (" " + new Date()).slice(0, 25),
-      });
-      toastSuccessNotify("Updated Successfully!");
-      navigate("/dashboard");
-    }
+    updateDoc(docRef, {
+      title,
+      picture,
+      date: (" " + new Date()).slice(0, 25),
+    });
+    toastSuccessNotify("Updated Successfully!");
+    navigate("/dashboard");
   } catch (error) {
     toastWarnNotify(error.message);
   }

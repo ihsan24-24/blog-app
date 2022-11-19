@@ -21,6 +21,7 @@ const NewBlock = () => {
       //     title: newPost.title || editData.title,
       //     picture: newPost.picture || editData.picture,
       //   };
+
       editBlog(newPost, editData.id, navigate);
     } else {
       addBloggItem(newPost, name, email, navigate);

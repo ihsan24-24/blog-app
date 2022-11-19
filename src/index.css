@@ -76,11 +76,12 @@ button:hover {
 
   color: black;
 }
-#heart {
-  color: blue;
-  background-color: aqua;
+.fa-heart {
   border-radius: 50%;
 }
-#heart:hover {
+.fa-heart:hover {
   cursor: pointer;
+}
+#red {
+  background-color: red;
 }
