@@ -9,26 +9,27 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import { IsLogin, singOut } from "../helpers/firebase";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 const NavbarComp = () => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [nowUser, setNowUSer] = useState(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { name, email } = useSelector((state) => state.auth);
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
+  console.log(name, email);
   const handleClose = () => {
     setAnchorEl(null);
   };
-  useEffect(() => {
-    IsLogin(setNowUSer);
-  }, []);
+
   const handleLogin = () => {
     navigate("/");
     handleClose();
   };
   const handleLogout = () => {
-    singOut(setNowUSer);
+    singOut(dispatch);
     handleClose();
     navigate("/");
   };
@@ -52,6 +53,7 @@ const NavbarComp = () => {
           >
             Home
           </Typography>
+          <Typography>{name}</Typography>
           {
             <div>
               <IconButton
@@ -79,10 +81,11 @@ const NavbarComp = () => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleProfile}>Profile</MenuItem>
-                <MenuItem onClick={handleNewPost}>New Post</MenuItem>
-                {nowUser && <MenuItem onClick={handleLogout}>Logout</MenuItem>}
-                {!nowUser && <MenuItem onClick={handleLogin}>Login</MenuItem>}
+                {name && <MenuItem onClick={handleProfile}>Profile</MenuItem>}
+                {name && <MenuItem onClick={handleNewPost}>New Post</MenuItem>}
+
+                {name && <MenuItem onClick={handleLogout}>Logout</MenuItem>}
+                {!email && <MenuItem onClick={handleLogin}>Login</MenuItem>}
               </Menu>
             </div>
           }

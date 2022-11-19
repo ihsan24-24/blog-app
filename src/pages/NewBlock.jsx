@@ -4,31 +4,30 @@ import React, { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import { addBloggItem, editBlog, IsLogin } from "../helpers/firebase";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const NewBlock = () => {
   const { state: editData } = useLocation();
+  const { name, email } = useSelector((state) => state.auth);
   const [newPost, setNewPost] = useState({
     title: editData?.title || "",
     picture: editData?.picture || "",
   });
-  const [nowUser, setNowUser] = useState();
+
   const handleClick = () => {
     if (editData?.edit) {
       //   newPost = {
       //     title: newPost.title || editData.title,
       //     picture: newPost.picture || editData.picture,
       //   };
-      editBlog(newPost, nowUser, editData.id);
+      editBlog(newPost, editData.id);
     } else {
-      addBloggItem(newPost, nowUser);
+      addBloggItem(newPost, name, email);
     }
   };
   const handleChange = (e) => {
     setNewPost({ ...newPost, [e.target.name]: e.target.value });
   };
-  useEffect(() => {
-    IsLogin(setNowUser);
-  }, []);
 
   return (
     <Box

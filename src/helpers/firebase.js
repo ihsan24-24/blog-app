@@ -26,6 +26,7 @@ import {
   signOut,
   updateProfile,
 } from "firebase/auth";
+import { clearUser, setUser } from "../features/AuthSlice";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -67,7 +68,7 @@ export const getDataById = async (id) => {
   }
 };
 
-export const editBlog = ({ title, picture }, { name, email }, id) => {
+export const editBlog = ({ title, picture }, id) => {
   try {
     const docRef = doc(db, "users", id);
     updateDoc(docRef, {
@@ -91,7 +92,7 @@ export const deleteBlog = (id, navigate) => {
   }
 };
 
-export const addBloggItem = ({ title, picture }, { name, email }) => {
+export const addBloggItem = ({ title, picture }, name, email) => {
   try {
     addDoc(contactRef, {
       title,
@@ -113,38 +114,22 @@ export const createUserWithMail = async (
   navigate
 ) => {
   await createUserWithEmailAndPassword(auth, email, password);
-  // .then((userCredential) => {
-  //   // eslint-disable-next-line
-  //   const user = userCredential.user;
 
-  // })
-  // .catch((error) => {
-  //   // eslint-disable-next-line
-  //   const errorCode = error.code;
-  //   const errorMessage = error.message;
-  //   // setErr(errorMessage.split("/")[1].split("-").join(" ").replace(").", ""));
-  // });
   await updateProfile(auth.currentUser, {
     displayName: username,
   });
-  // .then((res) => {
-  //   console.log(res);
-  //   console.log(username);
-  // })
-  // .catch((error) => {
-  //   // An error occurred
-  //   // ...
-  // });
+
   navigate("/");
 };
 
-export const LoginWithMail = ({ email, password }, navigate) => {
+export const LoginWithMail = ({ email, password }, navigate, dispatch) => {
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       toastSuccessNotify("Login is succesfull...");
       // dispatch(setUser({ email }));
       navigate("/dashboard");
-      console.log(userCredential);
+
+      dispatch(setUser({ name: userCredential.user.displayName, email }));
     })
     .catch((error) => {
       const errorMessage = error.message;
@@ -196,11 +181,11 @@ export const LoginWithGoogle = (navigate) => {
     });
 };
 
-export const singOut = (setNowUSer) => {
+export const singOut = (dispatch) => {
   const auth = getAuth();
   signOut(auth)
     .then(() => {
-      setNowUSer(null);
+      dispatch(clearUser());
     })
     .catch((error) => {
       // An error happened.

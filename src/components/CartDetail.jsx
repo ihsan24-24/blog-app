@@ -7,14 +7,13 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useNavigate, useParams } from "react-router-dom";
 import { deleteBlog, getDataById, IsLogin } from "../helpers/firebase";
+import { useSelector } from "react-redux";
 
 const CartDetail = () => {
-  const [nowUser, setNowUSer] = React.useState(null);
   const [data, setData] = React.useState("");
   const navigate = useNavigate();
-  //   const {
-  //     state: { date, email, id, name, picture, title },
-  //   } = useLocation();
+  const { name, email } = useSelector((state) => state.auth);
+
   const { id } = useParams();
   const getData = async () => {
     const newData = await getDataById(id);
@@ -23,7 +22,6 @@ const CartDetail = () => {
 
   React.useEffect(() => {
     getData();
-    IsLogin(setNowUSer);
   }, []);
   const editThisBlog = () => {
     navigate("/newpost", {
@@ -64,7 +62,7 @@ const CartDetail = () => {
           <Button size="small" onClick={goBack}>
             Go Back
           </Button>
-          {data?.email === nowUser?.email && (
+          {data?.email === email && (
             <Button
               variant="outlined"
               color="primary"
@@ -74,7 +72,7 @@ const CartDetail = () => {
               Edit
             </Button>
           )}
-          {data?.email === nowUser?.email && (
+          {data?.email === email && (
             <Button
               variant="outlined"
               color="danger"
