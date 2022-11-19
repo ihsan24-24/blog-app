@@ -5,13 +5,13 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { useLocation, useParams } from "react-router-dom";
-import { editBlog, getDataById, IsLogin } from "../helpers/firebase";
+import { useNavigate, useParams } from "react-router-dom";
+import { getDataById, IsLogin } from "../helpers/firebase";
 
 const CartDetail = () => {
   const [nowUser, setNowUSer] = React.useState(null);
   const [data, setData] = React.useState("");
-
+  const navigate = useNavigate();
   //   const {
   //     state: { date, email, id, name, picture, title },
   //   } = useLocation();
@@ -26,7 +26,9 @@ const CartDetail = () => {
     IsLogin(setNowUSer);
   }, []);
   const editThisBlog = () => {
-    // editBlog()
+    navigate("/newpost", {
+      state: { title: data.title, picture: data.picture, edit: true, id },
+    });
   };
   return (
     <Card sx={{ maxWidth: 345 }}>
@@ -38,7 +40,7 @@ const CartDetail = () => {
       />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          {nowUser?.name}
+          {data?.name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           {data?.title}

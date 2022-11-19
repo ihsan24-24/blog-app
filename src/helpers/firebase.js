@@ -67,10 +67,14 @@ export const getDataById = async (id) => {
   }
 };
 
-export const editBlog = () => {
+export const editBlog = ({ title, picture }, { name, email }, id) => {
   try {
-    // const docRef = doc(db, "users", id);
-    // updateDoc(docRef, { name, phone, gender });
+    const docRef = doc(db, "users", id);
+    updateDoc(docRef, {
+      title,
+      picture,
+      date: (" " + new Date()).slice(0, 25),
+    });
     toastSuccessNotify("Updated Successfully!");
   } catch (error) {
     toastWarnNotify(error.message);
@@ -91,7 +95,7 @@ export const addBloggItem = ({ title, picture }, { name, email }) => {
     addDoc(contactRef, {
       title,
       picture,
-      date: new Date().getFullYear(),
+      date: (" " + new Date()).slice(0, 25),
       name,
       email,
     });
