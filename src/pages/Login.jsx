@@ -154,10 +154,7 @@ const Login = () => {
           </Form>
         )}
       </Formik>
-      <Link to="" variant="body2">
-        Forgot password?
-      </Link>{" "}
-      <br />
+
       <Link to="/register" variant="body2">
         {"Don't have an account? Sign Up"}
       </Link>
