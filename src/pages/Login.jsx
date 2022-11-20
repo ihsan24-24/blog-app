@@ -128,10 +128,7 @@ const Login = () => {
                   id="password"
                   autoComplete="current-password"
                 />
-                <FormControlLabel
-                  control={<Checkbox value="remember" color="primary" />}
-                  label="Remember me"
-                />
+
                 <Button
                   type="submit"
                   fullWidth
@@ -163,7 +160,7 @@ const Login = () => {
         Forgot password?
       </Link>{" "}
       <br />
-      <Link to="" variant="body2">
+      <Link to="/register" variant="body2">
         {"Don't have an account? Sign Up"}
       </Link>
       <Copyright sx={{ mt: 8, mb: 4 }} />

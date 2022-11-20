@@ -23,6 +23,7 @@ const BlogCard = ({ date, email, id, name, picture, title, favorite }) => {
   const userName = useSelector((state) => state.auth.name);
   React.useEffect(() => {
     favorite ? setColor("red") : setColor("");
+    // eslint-disable-next-line
   }, []);
 
   const goDetail = () => {

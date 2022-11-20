@@ -52,13 +52,11 @@ const provider = new GoogleAuthProvider();
 export const useBlogListListener = (dispatch) => {
   useEffect(() => {
     onSnapshot(contactRef, (snapshot) => {
-      // setBlogList(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
-
       dispatch(
         setBlogList(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })))
       );
-      // return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
     });
+    // eslint-disable-next-line
   }, []);
 };
 export const getDataById = async (id) => {
