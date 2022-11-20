@@ -12,7 +12,7 @@ firebase firestore database'i ve yetkilendirme hizmetleri kullanılarak yapılm�
 
 ## Visualization of the Website
 
-![Form](./movie-app.gif)
+![Form](./blog.gif)
 
 
 
