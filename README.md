@@ -1,3 +1,91 @@
+# Blog
+# Project : Blog App
+
+## Description and use of the site
+
+In this project, It is a blog application made using firebase firestore database and authorization services. You can register and login with any e-mail. You can share in the New Block menu. The link address is required for the image. You can see your own profile and shares on your profile. You can only delete and edit your own posts. Since I use the Fire Store database, all the data is in a single collection, so if someone added to your favorites before you, the favorite button will appear in red. In this project, because I keep the data from the database and the users in redux, when you refresh, the redux states are empty.
+I will add redux-persist next week... the project took about 3 days.
+
+
+firebase firestore database'i ve yetkilendirme hizmetleri kullanılarak yapılmış bir blog uygulamasıdır. Herhangi bir mail ile kayıt olabilir ve giriş yapabilirsiniz. New Block menüsünde paylaşım yapabilirsiniz. Resim için bağlantı adresi gereklidir. Profilinizde kendi profilinizi ve paylaşımlarınızı görebilirsiniz. Yalnızca kendi paylaşımlarınızı silebilir ve editleyebilirsiniz. Fire Store databaseni kullandığım için tüm veriler tek bir collection da bu yüzden sizden önce biri favorilere ekleme yaptıysa sizde de favori butonu kırmızı olarak gelecektir. Bu projede database den gelen veriyi ve kullanıcıları  redux ta tuttuğum için refresh yaptığınızda redux stateleri boşalmış oluyor.
+## Check The Live Website ➡️ [Live Website](https://movie-24.netlify.app/)
+
+## Visualization of the Website
+
+![Form](./movie-app.gif)
+
+
+
+
+## Learning Outcomes
+
+At the end of the project, you will be able to;
+
+- improve coding skills within HTML & CSS & JS & ReactJS & Axios & React-Router & React-Redux & Google Firebase.
+
+- use git commands (push, pull, commit, add etc.) and Github as Version Control System.
+
+## Problem Statement
+
+- We are adding a new project to our portfolios. So you and your colleagues have started to work on the project.
+
+## Project Skeleton
+
+```
+Project(folder)
+|
+|----README.md
+├── public
+│     └── index.html
+├── src
+│    ├── components
+│    │       ├── BlogCard.jsx
+│    │       ├── CartDetail.jsx
+│    │       ├── Navbar.jsx
+│    ├── assests
+│    │       ├── kebap.jpg
+│    ├── app
+│    │       ├── store.jsx
+│    ├── helper
+│    │       ├── firebase.js
+│    │       ├── toastNotify.jsx
+│    ├── features
+│    │       ├── AuthSlice.jsx
+│    │       ├── BlogSlice.jsx
+│    ├── pages
+│    │       ├── Dashboard.jsx
+│    │       ├── NewBlock.jsx
+│    │       ├── Profile.jsx
+│    │       ├── Login.jsx
+│    │       ├── Register.jsx
+│    ├── router
+│    │       ├── AppRouter.jsx
+│    ├── App.js
+│    ├── index.js
+│    ├── index.css
+└── package.json
+```
+
+### Overview
+
+I mastered HTML & CSS & JS & ReactJS features in this project.
+You can see the visual representation of the website above.
+
+## Notes
+
+- Step 1: Create React App using `npx create-react-app project-name`
+
+- Step 2: Push your application into your own public repo on Github
+
+- Step 3: Add project gif to your project and README.md file.
+
+## Resources
+
+- 🔥 You can use [`Edemam-API`](https://edemam.com/) for your own work.
+
+## Support
+Open an Issue, I will check it a soon as possible 👀
+Don't forget to start the repo ⭐
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -6,7 +94,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
-### `yarn start`
+### `npm start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
@@ -14,12 +102,12 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
-### `yarn test`
+### `npm test`
 
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn build`
+### `npm run build`
 
 Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
@@ -29,7 +117,7 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn eject`
+### `npm run eject`
 
 **Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
@@ -65,6 +153,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/a
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-### `yarn build` fails to minify
+### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
