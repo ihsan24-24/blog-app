@@ -3,16 +3,16 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-// import Button from "@mui/material/Button";
+
 import Typography from "@mui/material/Typography";
 import { useNavigate, useParams } from "react-router-dom";
-import { deleteBlog, getDataById, IsLogin } from "../helpers/firebase";
+import { deleteBlog, getDataById } from "../helpers/firebase";
 import { useSelector } from "react-redux";
 
 const CartDetail = () => {
   const [data, setData] = React.useState("");
   const navigate = useNavigate();
-  const { name, email } = useSelector((state) => state.auth);
+  const { email } = useSelector((state) => state.auth);
 
   const { id } = useParams();
   const getData = async () => {
@@ -23,6 +23,7 @@ const CartDetail = () => {
 
   React.useEffect(() => {
     getData();
+    // eslint-disable-next-line
   }, []);
   const editThisBlog = () => {
     navigate("/newpost", {
