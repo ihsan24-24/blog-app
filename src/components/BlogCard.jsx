@@ -12,12 +12,21 @@ import { Box, IconButton } from "@mui/material";
 import kebap from "../assets/kebap.jpg";
 import { editFavorite } from "../helpers/firebase";
 import { useSelector } from "react-redux";
+import CommentIcon from "@mui/icons-material/Comment";
 
-const BlogCard = ({ date, email, id, name, picture, title, favorite }) => {
+const BlogCard = ({
+  date,
+  email,
+  comment,
+  id,
+  name,
+  picture,
+  title,
+  favorite,
+}) => {
   const navigate = useNavigate();
-
   const [color, setColor] = React.useState();
-  const userName = useSelector((state) => state.auth.name);
+  const userEmail = useSelector((state) => state.auth.email);
   React.useEffect(() => {
     favorite ? setColor("red") : setColor("");
     // eslint-disable-next-line
@@ -26,11 +35,13 @@ const BlogCard = ({ date, email, id, name, picture, title, favorite }) => {
   const goDetail = () => {
     navigate(`/dashboard/${id}`);
   };
-  const addFavorite = () => {
-    favorite = !favorite;
-    favorite ? setColor("red") : setColor("");
-    editFavorite(favorite, id);
+  const handleFavorite = () => {
+    console.log(favorite);
+    // favorite = !favorite;
+    // favorite ? setColor("red") : setColor("");
+    // editFavorite(favorite, id);
   };
+
   return (
     <Card
       sx={{
@@ -63,10 +74,20 @@ const BlogCard = ({ date, email, id, name, picture, title, favorite }) => {
 
       <Box sx={{ textAlign: "center", display: "flex" }}>
         <div>
-          {userName && (
-            <IconButton aria-label="add to favorites" onClick={addFavorite}>
-              <FavoriteIcon sx={{ color: color }} />
-            </IconButton>
+          {userEmail && (
+            <>
+              <IconButton
+                aria-label="add to favorites"
+                onClick={handleFavorite}
+              >
+                <FavoriteIcon sx={{ color: color }} />
+                <span>&nbsp;{favorite?.length - 1 || 0}</span>
+              </IconButton>
+              <IconButton aria-label="add to favorites" onClick={goDetail}>
+                <CommentIcon />
+                <span>&nbsp;{comment?.length - 1 || 0}</span>
+              </IconButton>
+            </>
           )}
         </div>
         <button onClick={goDetail}>Detail</button>

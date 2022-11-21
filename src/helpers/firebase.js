@@ -70,14 +70,30 @@ export const getDataById = async (id) => {
     console.log("No such document!");
   }
 };
-export const editFavorite = (favorite, id) => {
+
+export const addFavorite = ({ email }, favorites, id) => {
   const docRef = doc(db, "users", id);
   try {
     updateDoc(docRef, {
-      favorite,
+      favorite: [...favorites, { email }],
     });
+    toastSuccessNotify("Comment added...");
   } catch (error) {}
 };
+export const addComment = ({ comment, email, name }, comments, id) => {
+  const docRef = doc(db, "users", id);
+  try {
+    updateDoc(docRef, {
+      comment: [
+        ...comments,
+        { comment, email, name, date: (" " + new Date()).slice(0, 25) },
+      ],
+    });
+    toastSuccessNotify("Comment added...");
+  } catch (error) {}
+};
+
+// export const deleteFavorite =
 
 export const editBlog = ({ title, picture }, id, navigate) => {
   try {
@@ -112,7 +128,8 @@ export const addBloggItem = ({ title, picture }, name, email, navigate) => {
       date: (" " + new Date()).slice(0, 25),
       name,
       email,
-      favorite: false,
+      comment: [{ email: "", comment: "", name: "", date: "" }],
+      favorite: [{ email: "" }],
     });
     toastSuccessNotify("Added Successfully!");
     navigate("/dashboard");

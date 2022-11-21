@@ -22,9 +22,10 @@ code {
 .detail-cart {
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
   width: 100vw;
   min-height: 80vh;
+  gap: 1rem;
 }
 .truncate {
   width: 250px;
@@ -84,4 +85,10 @@ button:hover {
 }
 #red {
   background-color: red;
+}
+.relative {
+  position: relative;
+}
+.absolite {
+  position: static;
 }
