@@ -74,10 +74,12 @@ const Profile = () => {
             <h2>Favorites</h2>
             {blogList
               ?.filter((item) => {
-                const filteredPosts = item?.favorite?.filter(
-                  (favList) => favList.email === email
-                );
-                return filteredPosts;
+                if (item?.favorite) {
+                  const filteredPosts = item?.favorite?.filter(
+                    (favList) => favList.email === email
+                  );
+                  return filteredPosts;
+                }
               })
               .map((fav) => {
                 return <BlogCard key={uuid()} {...fav} />;
@@ -86,12 +88,14 @@ const Profile = () => {
           <div>
             <h2>Comments</h2>
             {blogList?.map((item) => {
-              const filteredPosts = item?.comment.filter(
-                (comList) => comList?.email === email
-              );
-              return filteredPosts.map((item) => (
-                <Comments key={uuid()} {...item} />
-              ));
+              if (item.comment) {
+                const filteredPosts = item?.comment.filter(
+                  (comList) => comList?.email === email
+                );
+                return filteredPosts.map((item) => (
+                  <Comments key={uuid()} {...item} />
+                ));
+              }
             })}
           </div>
         </div>
