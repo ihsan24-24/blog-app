@@ -65,7 +65,7 @@ const Profile = () => {
         <div>
           <div className="dashboard">
             {blogList
-              ?.filter((item) => item.email === email)
+              ?.filter((item) => item?.email === email)
               .map((item) => {
                 return <BlogCard key={item.id} {...item} />;
               })}
@@ -74,7 +74,7 @@ const Profile = () => {
             <h2>Favorites</h2>
             {blogList
               ?.filter((item) => {
-                const filteredPosts = item.favorite.filter(
+                const filteredPosts = item?.favorite?.filter(
                   (favList) => favList.email === email
                 );
                 return filteredPosts;
@@ -86,8 +86,8 @@ const Profile = () => {
           <div>
             <h2>Comments</h2>
             {blogList?.map((item) => {
-              const filteredPosts = item.comment.filter(
-                (comList) => comList.email === email
+              const filteredPosts = item?.comment.filter(
+                (comList) => comList?.email === email
               );
               return filteredPosts.map((item) => (
                 <Comments key={uuid()} {...item} />

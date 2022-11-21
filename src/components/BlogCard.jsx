@@ -29,9 +29,11 @@ const BlogCard = ({
   const [color, setColor] = React.useState();
   const userEmail = useSelector((state) => state.auth.email);
   React.useEffect(() => {
-    favorite.forEach((item) => {
-      item.email === userEmail ? setColor("red") : setColor("");
-    });
+    if (favorite) {
+      favorite?.forEach((item) => {
+        item.email === userEmail ? setColor("red") : setColor("");
+      });
+    }
 
     // eslint-disable-next-line
   }, [favorite]);
