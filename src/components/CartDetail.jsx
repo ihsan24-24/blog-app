@@ -20,6 +20,7 @@ const CartDetail = () => {
   const navigate = useNavigate();
   const { email } = useSelector((state) => state.auth);
   const { id } = useParams();
+  // eslint-disable-next-line
   const [color, setColor] = React.useState("");
 
   //! sayfada beğeni yada yorum olduğunda yeniden render etmesi gerektiğinden bu state herhangi bir değişiklikte true ve false olarak değişecek ve sayda yeniden render olacak. useEffect e yorum yada favoriyi dapencity array olarak yazamıyorum çünkü onlar data nın içinde useEffect ise datayı değişiyor. Yani data değişikliği useEffecti çağırıyor useEffecte datayı değiştiriyor bu yüzden sonsuz döngüye giriyor.

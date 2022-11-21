@@ -1,5 +1,4 @@
-import { Avatar, Card, CardHeader, TextField } from "@mui/material";
-import { red } from "@mui/material/colors";
+import { Card, TextField } from "@mui/material";
 
 import { useState } from "react";
 import { useSelector } from "react-redux";
