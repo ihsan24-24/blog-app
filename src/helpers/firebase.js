@@ -71,11 +71,31 @@ export const getDataById = async (id) => {
   }
 };
 
-export const addFavorite = (email, favorites, id) => {
+export const addFavorite = (
+  UserEmail,
+  favorites,
+  id,
+  { date, email, comment, name, picture, title, favorite }
+) => {
   const docRef = doc(db, "users", id);
   try {
     updateDoc(docRef, {
-      favorite: [...favorites, { email }],
+      favorite: [
+        ...favorites,
+        {
+          email: UserEmail,
+          post: {
+            date,
+            email,
+            comment,
+            id,
+            name,
+            picture,
+            title,
+            favorite,
+          },
+        },
+      ],
     });
     toastSuccessNotify("Favorite added...");
   } catch (error) {}
@@ -86,7 +106,12 @@ export const addComment = ({ comment, email, name }, comments, id) => {
     updateDoc(docRef, {
       comment: [
         ...comments,
-        { comment, email, name, date: (" " + new Date()).slice(0, 25) },
+        {
+          comment,
+          email,
+          name,
+          date: (" " + new Date()).slice(0, 25),
+        },
       ],
     });
     toastSuccessNotify("Comment added...");
@@ -190,7 +215,7 @@ export const IsLogin = (setUSerInfo) => {
         creatTime: user.metadata.creationTime.replace("GMT", ""),
         singupTime: user.metadata.lastSignInTime.replace("GMT", ""),
       });
-      console.log(user);
+
       // setNowUSer({ name: user.displayName, email: user.email });
     } else {
     }

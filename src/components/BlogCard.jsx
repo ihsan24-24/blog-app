@@ -47,18 +47,17 @@ const BlogCard = ({
       );
       deleteFavorite(filteredFavorite, id);
     } else if (isFavorite.length === 0) {
-      addFavorite(userEmail, favorite, id);
+      addFavorite(userEmail, favorite, id, {
+        date,
+        email,
+        comment,
+        id,
+        name,
+        picture,
+        title,
+        favorite,
+      });
     }
-    // favorite.forEach((item) => {
-    //   if (item.email === userEmail) {
-    //     const filteredFavorite = favorite.filter(
-    //       (item) => item.email !== userEmail
-    //     );
-    //     deleteFavorite(filteredFavorite, id);
-    //   } else {
-    //     addFavorite(userEmail, favorite, id);
-    //   }
-    // });
   };
 
   return (
