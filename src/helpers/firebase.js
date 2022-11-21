@@ -71,13 +71,13 @@ export const getDataById = async (id) => {
   }
 };
 
-export const addFavorite = ({ email }, favorites, id) => {
+export const addFavorite = (email, favorites, id) => {
   const docRef = doc(db, "users", id);
   try {
     updateDoc(docRef, {
       favorite: [...favorites, { email }],
     });
-    toastSuccessNotify("Comment added...");
+    toastSuccessNotify("Favorite added...");
   } catch (error) {}
 };
 export const addComment = ({ comment, email, name }, comments, id) => {
@@ -93,7 +93,15 @@ export const addComment = ({ comment, email, name }, comments, id) => {
   } catch (error) {}
 };
 
-// export const deleteFavorite =
+export const deleteFavorite = (favorites, id) => {
+  const docRef = doc(db, "users", id);
+  try {
+    updateDoc(docRef, {
+      favorite: favorites,
+    });
+    toastSuccessNotify("Favorite delete...");
+  } catch (error) {}
+};
 
 export const editBlog = ({ title, picture }, id, navigate) => {
   try {

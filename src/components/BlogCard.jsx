@@ -10,9 +10,10 @@ import { red } from "@mui/material/colors";
 import { useNavigate } from "react-router-dom";
 import { Box, IconButton } from "@mui/material";
 import kebap from "../assets/kebap.jpg";
-import { editFavorite } from "../helpers/firebase";
+
 import { useSelector } from "react-redux";
 import CommentIcon from "@mui/icons-material/Comment";
+import { addFavorite, deleteFavorite } from "../helpers/firebase";
 
 const BlogCard = ({
   date,
@@ -28,18 +29,36 @@ const BlogCard = ({
   const [color, setColor] = React.useState();
   const userEmail = useSelector((state) => state.auth.email);
   React.useEffect(() => {
-    favorite ? setColor("red") : setColor("");
+    favorite.forEach((item) => {
+      item.email === userEmail ? setColor("red") : setColor("");
+    });
+
     // eslint-disable-next-line
-  }, []);
+  }, [favorite]);
 
   const goDetail = () => {
     navigate(`/dashboard/${id}`);
   };
   const handleFavorite = () => {
-    console.log(favorite);
-    // favorite = !favorite;
-    // favorite ? setColor("red") : setColor("");
-    // editFavorite(favorite, id);
+    const isFavorite = favorite.filter((item) => item.email === userEmail);
+    if (isFavorite.length > 0) {
+      const filteredFavorite = favorite.filter(
+        (item) => item.email !== userEmail
+      );
+      deleteFavorite(filteredFavorite, id);
+    } else if (isFavorite.length === 0) {
+      addFavorite(userEmail, favorite, id);
+    }
+    // favorite.forEach((item) => {
+    //   if (item.email === userEmail) {
+    //     const filteredFavorite = favorite.filter(
+    //       (item) => item.email !== userEmail
+    //     );
+    //     deleteFavorite(filteredFavorite, id);
+    //   } else {
+    //     addFavorite(userEmail, favorite, id);
+    //   }
+    // });
   };
 
   return (
