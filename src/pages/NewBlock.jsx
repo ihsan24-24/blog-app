@@ -83,7 +83,7 @@ const NewBlock = () => {
           <TextField
             id="outlined-error-helper-text"
             name="picture"
-            label="Error"
+            label="URL"
             value={newPost?.picture}
             onChange={handleChange}
           />
