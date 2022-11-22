@@ -72,31 +72,39 @@ const Profile = () => {
           </div>
           <div>
             <h2>Favorites</h2>
-            {blogList
-              ?.filter((item) => {
-                if (item?.favorite) {
-                  const filteredPosts = item?.favorite?.filter(
-                    (favList) => favList.email === email
-                  );
-                  return filteredPosts;
-                }
-              })
-              .map((fav) => {
-                return <BlogCard key={uuid()} {...fav} />;
-              })}
+
+            {
+              // eslint-disable-next-line
+              blogList
+                // eslint-disable-next-line
+                ?.filter((item) => {
+                  if (item?.favorite) {
+                    const filteredPosts = item?.favorite?.filter(
+                      (favList) => favList.email === email
+                    );
+                    return filteredPosts;
+                  }
+                })
+                .map((fav) => {
+                  return <BlogCard key={uuid()} {...fav} />;
+                })
+            }
           </div>
           <div>
             <h2>Comments</h2>
-            {blogList?.map((item) => {
-              if (item.comment) {
-                const filteredPosts = item?.comment.filter(
-                  (comList) => comList?.email === email
-                );
-                return filteredPosts.map((item) => (
-                  <Comments key={uuid()} {...item} />
-                ));
-              }
-            })}
+            {
+              // eslint-disable-next-line
+              blogList?.map((item) => {
+                if (item.comment) {
+                  const filteredPosts = item?.comment.filter(
+                    (comList) => comList?.email === email
+                  );
+                  return filteredPosts.map((item) => (
+                    <Comments key={uuid()} {...item} />
+                  ));
+                }
+              })
+            }
           </div>
         </div>
       </div>
