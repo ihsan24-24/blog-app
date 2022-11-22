@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import uuid from "react-uuid";
 import BlogCard from "../components/BlogCard";
 import Comments from "../components/Comments";
+import Favorites from "../components/Favorites";
 
 import { IsLogin } from "../helpers/firebase";
 
@@ -70,25 +71,17 @@ const Profile = () => {
                 return <BlogCard key={item.id} {...item} />;
               })}
           </div>
-          <div>
+          <div className="dashboard">
             <h2>Favorites</h2>
 
-            {
-              // eslint-disable-next-line
-              blogList
-                // eslint-disable-next-line
-                ?.filter((item) => {
-                  if (item?.favorite) {
-                    const filteredPosts = item?.favorite?.filter(
-                      (favList) => favList.email === email
-                    );
-                    return filteredPosts;
-                  }
-                })
-                .map((fav) => {
-                  return <BlogCard key={uuid()} {...fav} />;
-                })
-            }
+            {blogList?.map((item) => {
+              const filteredPosts = item?.favorite.filter(
+                (favList) => favList?.email === email
+              );
+              return filteredPosts.map((item) => (
+                <Favorites key={uuid()} id={item.id} />
+              ));
+            })}
           </div>
           <div>
             <h2>Comments</h2>
@@ -100,7 +93,7 @@ const Profile = () => {
                     (comList) => comList?.email === email
                   );
                   return filteredPosts.map((item) => (
-                    <Comments key={uuid()} {...item} />
+                    <Comments key={uuid()} {...item} profilComment />
                   ));
                 }
               })
@@ -113,3 +106,29 @@ const Profile = () => {
 };
 
 export default Profile;
+
+// blogList
+// // eslint-disable-next-line
+// ?.filter((item) => {
+//   if (item?.favorite) {
+//     const filteredPosts = item?.favorite?.filter(
+//       (favList) => favList.email === email
+//     );
+//     return filteredPosts;
+//   }
+// })
+// .map((fav) => {
+//   console.log("fav yenilendi...");
+//   return <BlogCard key={uuid()} {...fav} />;
+// })
+
+// blogList?.map((item) => {
+//   const filteredPosts = item?.favorite?.filter(
+//     (favList) => favList.email === email
+//   );
+//   console.log(filteredPosts);
+//   return filteredPosts.map(
+//     (item) => console.log("item", item)
+//     <BlogCard key={uuid()} {...item.post} />
+//   );
+// })

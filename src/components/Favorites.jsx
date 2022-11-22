@@ -12,45 +12,29 @@ import { Box, IconButton } from "@mui/material";
 
 import { useSelector } from "react-redux";
 import CommentIcon from "@mui/icons-material/Comment";
-import { addFavorite, deleteFavorite } from "../helpers/firebase";
-
-const BlogCard = ({
-  date,
-  email,
-  comment,
-  id,
-  name,
-  picture,
-  title,
-  favorite,
-}) => {
+import { deleteFavorite, getDataById } from "../helpers/firebase";
+const Favorites = ({ id }) => {
   const navigate = useNavigate();
-  const [color, setColor] = React.useState();
   const userEmail = useSelector((state) => state.auth.email);
+  const [data, setData] = React.useState();
+  const getPost = async () => {
+    const newData = await getDataById(id);
+    setData(newData);
+  };
 
   React.useEffect(() => {
-    if (favorite) {
-      favorite?.forEach((item) => {
-        item.email === userEmail ? setColor("red") : setColor("");
-      });
-    }
-
+    getPost();
     // eslint-disable-next-line
-  }, [favorite]);
+  }, []);
 
   const goDetail = () => {
     navigate(`/dashboard/${id}`);
   };
   const handleFavorite = () => {
-    const isFavorite = favorite?.filter((item) => item.email === userEmail);
-    if (isFavorite.length > 0) {
-      const filteredFavorite = favorite?.filter(
-        (item) => item.email !== userEmail
-      );
-      deleteFavorite(filteredFavorite, id);
-    } else if (isFavorite.length === 0) {
-      addFavorite(userEmail, favorite, id);
-    }
+    const filteredFavorite = data?.favorite?.filter(
+      (item) => item.email !== userEmail
+    );
+    deleteFavorite(filteredFavorite, id);
   };
 
   return (
@@ -65,21 +49,21 @@ const BlogCard = ({
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            {name[0].toLocaleUpperCase()}
+            {data?.name[0].toLocaleUpperCase()}
           </Avatar>
         }
-        title={name}
-        subheader={date}
+        title={data?.name}
+        subheader={data?.date}
       />
       <CardMedia
         component="img"
         height="194"
-        image={picture}
+        image={data?.picture}
         alt="Paella dish"
       />
       <CardContent>
         <Typography variant="body2" color="text.secondary" className="truncate">
-          {title}
+          {data?.title}
         </Typography>
       </CardContent>
 
@@ -91,12 +75,12 @@ const BlogCard = ({
                 aria-label="add to favorites"
                 onClick={handleFavorite}
               >
-                <FavoriteIcon sx={{ color: color }} />
-                <span>&nbsp;{favorite?.length - 1 || 0}</span>
+                <FavoriteIcon sx={{ color: "red" }} />
+                <span>&nbsp;{data?.favorite?.length - 1 || 0}</span>
               </IconButton>
               <IconButton aria-label="add to favorites" onClick={goDetail}>
                 <CommentIcon />
-                <span>&nbsp;{comment?.length - 1 || 0}</span>
+                <span>&nbsp;{data?.comment?.length - 1 || 0}</span>
               </IconButton>
             </>
           )}
@@ -107,4 +91,4 @@ const BlogCard = ({
   );
 };
 
-export default BlogCard;
+export default Favorites;

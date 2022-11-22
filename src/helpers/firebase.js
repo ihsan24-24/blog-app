@@ -71,12 +71,7 @@ export const getDataById = async (id) => {
   }
 };
 
-export const addFavorite = (
-  UserEmail,
-  favorites,
-  id,
-  { date, email, comment, name, picture, title, favorite }
-) => {
+export const addFavorite = (UserEmail, favorites, id) => {
   const docRef = doc(db, "users", id);
   try {
     updateDoc(docRef, {
@@ -84,16 +79,7 @@ export const addFavorite = (
         ...favorites,
         {
           email: UserEmail,
-          post: {
-            date,
-            email,
-            comment,
-            id,
-            name,
-            picture,
-            title,
-            favorite,
-          },
+          id,
         },
       ],
     });
@@ -111,6 +97,7 @@ export const addComment = ({ comment, email, name }, comments, id) => {
           email,
           name,
           date: (" " + new Date()).slice(0, 25),
+          id,
         },
       ],
     });

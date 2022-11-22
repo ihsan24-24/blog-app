@@ -33,7 +33,7 @@ const Register = () => {
   const navigate = useNavigate();
   const handleCreate = (e, values) => {
     e.preventDefault();
-    console.log(values);
+
     createUserWithMail(values, navigate);
   };
 
