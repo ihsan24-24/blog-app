@@ -209,7 +209,7 @@ export const IsLogin = (setUSerInfo) => {
   });
 };
 
-export const LoginWithGoogle = (navigate) => {
+export const LoginWithGoogle = (navigate, dispatch) => {
   const auth = getAuth();
   signInWithPopup(auth, provider)
     .then((result) => {
@@ -220,6 +220,7 @@ export const LoginWithGoogle = (navigate) => {
       // The signed-in user info.
       // eslint-disable-next-line
       const user = result.user;
+      dispatch(setUser({ name: user.displayName, email: user.email }));
       navigate("/dashboard");
     })
     .catch((error) => {

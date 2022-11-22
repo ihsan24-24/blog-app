@@ -18,31 +18,48 @@ const Profile = () => {
     fav: "none",
     com: "none",
   });
+  const [disable, setDisable] = useState({
+    post: true,
+    fav: false,
+    com: false,
+  });
 
   useEffect(() => {
     IsLogin(setUserInfo);
   }, []);
   const changeVisbility = (e) => {
     if (e.target.id === "post") {
-      console.log("post");
       setVisibility({
         post: "block",
         fav: "none",
         com: "none",
       });
+      setDisable({
+        post: true,
+        fav: false,
+        com: false,
+      });
     } else if (e.target.id === "fav") {
-      console.log("fav");
       setVisibility({
         post: "none",
         fav: "block",
         com: "none",
       });
+      setDisable({
+        post: false,
+        fav: true,
+        com: false,
+      });
     } else if (e.target.id === "com") {
-      console.log("com");
       setVisibility({
         post: "none",
         fav: "none",
         com: "block",
+      });
+      setDisable({
+        post: false,
+        fav: false,
+        com: true,
       });
     }
   };
@@ -57,9 +74,27 @@ const Profile = () => {
         }}
         onClick={changeVisbility}
       >
-        <button id="post">Posts</button>
-        <button id="fav">Favorites</button>
-        <button id="com">Comments</button>
+        <button
+          id="post"
+          disabled={disable.post}
+          style={{ background: disable.post && "red" }}
+        >
+          Posts
+        </button>
+        <button
+          id="fav"
+          disabled={disable.fav}
+          style={{ background: disable.fav && "red" }}
+        >
+          Favorites
+        </button>
+        <button
+          id="com"
+          disabled={disable.com}
+          style={{ background: disable.com && "red" }}
+        >
+          Comments
+        </button>
       </div>
       <div style={{ display: "flex", flexWrap: "wrap", gap: "2rem" }}>
         <div className="user-info-cart">
