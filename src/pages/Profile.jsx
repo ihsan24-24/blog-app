@@ -68,6 +68,7 @@ const Profile = () => {
       <div
         style={{
           display: "flex",
+          flexWrap: "wrap",
           justifyContent: "center",
           width: "90vw",
           border: "2px solid blue",

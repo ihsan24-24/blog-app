@@ -60,6 +60,7 @@ const BlogCard = ({
         height: "400px",
         backgroundColor: "rgba(16, 199, 199, 0.23)",
         padding: "1rem",
+        margin: "1rem",
       }}
     >
       <CardHeader

@@ -25,6 +25,7 @@ const CartDetail = () => {
 
   //! sayfada beğeni yada yorum olduğunda yeniden render etmesi gerektiğinden bu state herhangi bir değişiklikte true ve false olarak değişecek ve sayda yeniden render olacak. useEffect e yorum yada favoriyi dapencity array olarak yazamıyorum çünkü onlar data nın içinde useEffect ise datayı değişiyor. Yani data değişikliği useEffecti çağırıyor useEffecte datayı değiştiriyor bu yüzden sonsuz döngüye giriyor.
   const [isChange, setIsChange] = React.useState(false);
+  const [showCommentsDiv, setShowCommentsDiv] = React.useState("none");
   const getData = async () => {
     const newData = await getDataById(id);
     setData(newData);
@@ -45,10 +46,13 @@ const CartDetail = () => {
   const goBack = () => {
     navigate(-1);
   };
-  const showComment = () => {};
+  const showComment = () => {
+    showCommentsDiv === "none" && setShowCommentsDiv("block");
+    showCommentsDiv === "block" && setShowCommentsDiv("none");
+  };
   const addFavorite = () => {};
   return (
-    <div className="detail-cart">
+    <div className="detail-cart" style={{ marginTop: "1rem" }}>
       <Card sx={{ width: "350px", minHeight: "500px" }}>
         <CardMedia
           component="img"
@@ -78,12 +82,24 @@ const CartDetail = () => {
                 <FavoriteIcon sx={{ color: color }} />
                 <span>&nbsp;{data?.favorite?.length - 1 || 0}</span>
               </IconButton>
-              <IconButton aria-label="add to favorites" onClick={showComment}>
+              <IconButton aria-label="show comment" onClick={showComment}>
                 <CommentIcon />
                 <span>&nbsp;{data?.comment?.length - 1 || 0}</span>
               </IconButton>
             </>
           )}
+        </div>
+        <div style={{ display: showCommentsDiv }}>
+          <Newcomment
+            comments={data?.comment}
+            isChange={isChange}
+            setIsChange={setIsChange}
+          />
+          <div style={{ marginTop: "1rem" }}>
+            {data?.comment?.map((item) => {
+              return item?.email && <Comments key={uuid()} {...item} />;
+            })}
+          </div>
         </div>
         <CardActions>
           <button size="small" onClick={goBack}>
@@ -97,19 +113,6 @@ const CartDetail = () => {
           )}
         </CardActions>
       </Card>
-      <div>
-        <Newcomment
-          comments={data?.comment}
-          isChange={isChange}
-          setIsChange={setIsChange}
-        />
-        <div style={{ marginTop: "1rem" }}>
-          {data?.comment?.map((item) => {
-            return item?.email && <Comments key={uuid()} {...item} />;
-          })}
-        </div>
-        {/* <Comments comments={data?.comment} /> */}
-      </div>
     </div>
   );
 };
