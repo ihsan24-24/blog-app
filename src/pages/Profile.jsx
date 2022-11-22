@@ -13,24 +13,53 @@ const Profile = () => {
   const navigate = useNavigate();
   const { email } = useSelector((state) => state.auth);
   const { blogList } = useSelector((state) => state.posts);
+  const [visibility, setVisibility] = useState({
+    post: "block",
+    fav: "none",
+    com: "none",
+  });
 
   useEffect(() => {
     IsLogin(setUserInfo);
   }, []);
-
+  const changeVisbility = (e) => {
+    if (e.target.id === "post") {
+      console.log("post");
+      setVisibility({
+        post: "block",
+        fav: "none",
+        com: "none",
+      });
+    } else if (e.target.id === "fav") {
+      console.log("fav");
+      setVisibility({
+        post: "none",
+        fav: "block",
+        com: "none",
+      });
+    } else if (e.target.id === "com") {
+      console.log("com");
+      setVisibility({
+        post: "none",
+        fav: "none",
+        com: "block",
+      });
+    }
+  };
   return (
     <div className="user-info">
       <div
         style={{
           display: "flex",
           justifyContent: "center",
-          width: "100%",
+          width: "90vw",
           border: "2px solid blue",
         }}
+        onClick={changeVisbility}
       >
-        <button>Posts</button>
-        <button>Favorites</button>
-        <button>Comments</button>
+        <button id="post">Posts</button>
+        <button id="fav">Favorites</button>
+        <button id="com">Comments</button>
       </div>
       <div style={{ display: "flex", flexWrap: "wrap", gap: "2rem" }}>
         <div className="user-info-cart">
@@ -63,15 +92,15 @@ const Profile = () => {
           </table>
           <button onClick={() => navigate(-1)}>Go Back</button>
         </div>
-        <div>
-          <div className="dashboard">
+        <div className="show">
+          <div className="dashboard" style={{ display: visibility.post }}>
             {blogList
               ?.filter((item) => item?.email === email)
               .map((item) => {
                 return <BlogCard key={item.id} {...item} />;
               })}
           </div>
-          <div className="dashboard">
+          <div className="dashboard" style={{ display: visibility.fav }}>
             <h2>Favorites</h2>
 
             {blogList?.map((item) => {
@@ -83,7 +112,7 @@ const Profile = () => {
               ));
             })}
           </div>
-          <div>
+          <div style={{ display: visibility.com }}>
             <h2>Comments</h2>
             {
               // eslint-disable-next-line
