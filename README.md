@@ -3,11 +3,11 @@
 
 ## Description and use of the site
 
-In this project, It is a blog application made using firebase firestore database and authorization services. You can register and login with any e-mail. You can share in the New Block menu. The link address is required for the image. You can see your own profile and shares on your profile. You can only delete and edit your own posts. Since I use the Fire Store database, all the data is in a single collection, so if someone added to your favorites before you, the favorite button will appear in red. In this project, because I keep the data from the database and the users in redux, when you refresh, the redux states are empty.
-I will add redux-persist next week... the project took about 3 days.
+In this project, It is a blog application made using firebase firestore database and authorization services. You can register and login with any e-mail. You can share in the New Block menu. The link address is required for the image. You can see your own profile, shares, favorites and comments on your profile. You can only delete and edit your own posts.
+ the project took about 6 days.
 
 
-firebase firestore database'i ve yetkilendirme hizmetleri kullanılarak yapılmış bir blog uygulamasıdır. Herhangi bir mail ile kayıt olabilir ve giriş yapabilirsiniz. New Block menüsünde paylaşım yapabilirsiniz. Resim için bağlantı adresi gereklidir. Profilinizde kendi profilinizi ve paylaşımlarınızı görebilirsiniz. Yalnızca kendi paylaşımlarınızı silebilir ve editleyebilirsiniz. Fire Store databaseni kullandığım için tüm veriler tek bir collection da bu yüzden sizden önce biri favorilere ekleme yaptıysa sizde de favori butonu kırmızı olarak gelecektir. Bu projede database den gelen veriyi ve kullanıcıları  redux ta tuttuğum için refresh yaptığınızda redux stateleri boşalmış oluyor.
+firebase firestore database'i ve yetkilendirme hizmetleri kullanılarak yapılmış bir blog uygulamasıdır. Herhangi bir mail ile kayıt olabilir ve giriş yapabilirsiniz. New Block menüsünde paylaşım yapabilirsiniz. Resim için bağlantı adresi gereklidir. Profilinizde kendi profilinizi, paylaşımlarınızı, favorilerinizi ve yorumlarınızı görebilirsiniz. Yalnızca kendi paylaşımlarınızı silebilir ve editleyebilirsiniz.
 ## Check The Live Website ➡️ [Live Website](https://movie-24.netlify.app/)
 
 ## Visualization of the Website
